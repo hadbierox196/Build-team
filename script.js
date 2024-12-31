@@ -743,4 +743,23 @@ function renderPitch(players) {
     card.draggable = true;
 
     card.addEventListener('dragstart', (e) => {
-      e.dataTransfer.setData('text/plain', e.target.id)
+      e.dataTransfer.setData('text/plain', e.target.id);
+    });
+
+    pitch.appendChild(card);
+  });
+
+  // Enable dropping onto the pitch
+  pitch.addEventListener('dragover', (e) => {
+    e.preventDefault();
+  });
+
+  pitch.addEventListener('drop', (e) => {
+    e.preventDefault();
+    const draggedId = e.dataTransfer.getData('text/plain');
+    const draggedElement = document.getElementById(draggedId);
+    draggedElement.style.position = 'absolute';
+    draggedElement.style.left = `${e.offsetX - (draggedElement.offsetWidth / 2)}px`;
+    draggedElement.style.top = `${e.offsetY - (draggedElement.offsetHeight / 2)}px`;
+  });
+}
